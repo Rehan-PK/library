@@ -1,3 +1,16 @@
 body {
   background-color: black;
+  color: white;
 }
+
+::backdrop {
+  background-color: blue;
+  opacity: 0.25;
+}
+
+#dialog {
+  border: none;
+  border-radius: 30px;
+  width: 350px;
+}
+
