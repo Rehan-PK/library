@@ -156,9 +156,35 @@ function addBookToLibrary(item) {
               // para.appendChild(textAddition);
               readStatusButton.appendChild(textAddition);
               // bookSpace.appendChild(para);
+
+              // add id to readStatusButton
+              // readStatusButton.id = textAddition.textContent;
+              readStatusButton.id = 'read-button';
+              readStatusButton.addEventListener("click", () => {
+                if (book.read == 'Read') {
+                      book.read = 'Not Read';
+                    } else {
+                      book.read = 'Read';
+                    }
+                    readStatusButton.innerText = book.read;
+              });
+
               bookSpace.appendChild(readStatusButton);
               let createGap = document.createElement('br');
               bookSpace.appendChild(createGap);
+
+              // add event on readStatusButton to change its innerText to Not Read
+              console.log(readStatusButton.id);
+              // let button1 = 
+              // readStatusButton = document.getElementById('readStatusButton.id');
+              // readStatusButton.addEventListener("click", () => {
+              //   if (readStatusButton.innerText === 'Not read') {
+              //     readStatusButton.innerText === 'Read';
+              //   } else {
+              //     readStatusButton.innerText === 'Not read';
+              //   }
+              // });
+
             } else if (key == 'uniqueID') {
               // do nothing
             } else if (book[key] == '') {
@@ -181,10 +207,19 @@ function addBookToLibrary(item) {
             // console.log(e.target.parentNode.id);
             deleteBook(book.uniqueID);
           });
+
+          // let readButton = document.getElementById('read-button');
+          // readButton.addEventListener("click", () => {
+          //   if (book.read == 'Read') {
+          //     book.read = 'Not Read';
+          //   } else {
+          //     book.read = 'Read';
+          //   }
+          //   readButton.innerText = book.read;
+          // })
         }
 
 // Entire myLibrary repopulated on shelf whenever a book added - fix it ! - done
-
 
 // Toggle read button; change background color & button text when clicked
 // select read button
@@ -211,9 +246,13 @@ function deleteBook (bookID) {
       console.log(myLibrary.indexOf(myLibrary[i]));
       myLibrary.splice(myLibrary.indexOf(myLibrary[i]),1);
     }
-
       // myLibrary.forEach((element) => {
       //   console.log(element.uniqueID);
       // });
     }
 }
+
+// Key learnings:
+    // when button created then addEventListener to it before adding button to DOM
+    // set element id by element.id = XXXXXX
+    // element.setAttribute("class", "text-book")
