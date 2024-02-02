@@ -17,17 +17,17 @@ function addBookToLibrary(item) {
 
 // Write a function that loops through the array and displays each book on the page. You can display them in some sort of table, or each on their own “card”. It might help for now to manually add a few books to your array so you can see the display.
 
-function displayBook() {
-  // loop through the array
-  // display each book on the page
-  for (let i = 0; i < myLibrary.length; i++) {
-    console.log("Title:" + myLibrary[i].title);  
-    console.log("Author:" + myLibrary[i].author);  
-    console.log("Pages:" + myLibrary[i].pages);  
-    console.log(myLibrary[i].read ? 'yes' : 'no');  
-    // myLibrary[i].name, & .pages
-  }  
-}
+// function displayBook() {
+//   // loop through the array
+//   // display each book on the page
+//   for (let i = 0; i < myLibrary.length; i++) {
+//     console.log("Title:" + myLibrary[i].title);  
+//     console.log("Author:" + myLibrary[i].author);  
+//     console.log("Pages:" + myLibrary[i].pages);  
+//     console.log(myLibrary[i].read ? 'yes' : 'no');  
+//     // myLibrary[i].name, & .pages
+//   }  
+// }
 
       // manually adding 2 books to myLibrary
       // const book1 = {
@@ -119,6 +119,15 @@ function displayBook() {
         const bookShelf = document.getElementById('book-shelf');
 
         function displayAllBooks() {
+          // first we'll delete all existing books
+          let shelfItems = document.getElementsByClassName("book-item");
+          let shelfItemsLength = shelfItems.length;
+          for (let i = 0; i < shelfItemsLength; i++) {
+            while (shelfItems[i]) {
+              shelfItems[i].remove();
+            }
+          }
+          // now we populate shelf anew with the existing items
           for (let i = 0; i < myLibrary.length; i++) {
             bookSpace = document.createElement('div');
             // bookSpace.setAttribute("id", "something");
@@ -136,17 +145,75 @@ function displayBook() {
 
         // defining displayBook() for only a single instance 'Book'
         function displayBook(book, bookSpace) {
+          bookSpace.id = book.uniqueID;
+          bookSpace.classList.add("book-item");
           let textAddition;
           for (const key in book) {
             if(key == 'read') {
-              textAddition = document.createTextNode(`${book[key] ? 'yes' : 'no'}`)
+              textAddition = document.createTextNode(`${book[key] ? 'Read' : 'Not read'}`);
+              let readStatusButton = document.createElement('button');
+              // let para = document.createElement('p');
+              // para.appendChild(textAddition);
+              readStatusButton.appendChild(textAddition);
+              // bookSpace.appendChild(para);
+              bookSpace.appendChild(readStatusButton);
+              let createGap = document.createElement('br');
+              bookSpace.appendChild(createGap);
             } else if (key == 'uniqueID') {
               // do nothing
-            } else {
-              textAddition = document.createTextNode(`${book[key]}`)
+            } else if (book[key] == '') {
+              // do nothing
             }
-            bookSpace.appendChild(textAddition);
-            bookSpace.id = book.uniqueID;
-            
+            else {
+              textAddition = document.createTextNode(`${key.toUpperCase()}: "${book[key]}"`)
+              let para = document.createElement('p');
+              para.appendChild(textAddition);
+              bookSpace.appendChild(para);
+            }
           }
+          let deleteButton = document.createElement('button');
+          textAddition = document.createTextNode("Delete");
+          deleteButton.appendChild(textAddition);
+          bookSpace.appendChild(deleteButton);
+          // pass on the reference to the book i.e. 'book' to the event
+          deleteButton.addEventListener("click", () => {
+            // get id of parent node i.e. book-item
+            // console.log(e.target.parentNode.id);
+            deleteBook(book.uniqueID);
+          });
         }
+
+// Entire myLibrary repopulated on shelf whenever a book added - fix it ! - done
+
+
+// Toggle read button; change background color & button text when clicked
+// select read button
+
+// define function for delete button:
+  // 1. remove the selected book
+  // 2. run displayBook() function
+
+function deleteBook (bookID) {
+  // delete this book
+  let currentBook = document.getElementById(bookID);
+  // run displayBook()
+  currentBook.remove();
+  // i have uniqueID reference, need to find list index with this value & delete it
+  // loop over all items of myLibrary
+  // delete item which has id equal to bookID
+  for (let i = 0; i < myLibrary.length; i++) {
+    // console.log(myLibrary[i].uniqueID);
+    // console.log(bookID);
+    // get the index No
+    if (myLibrary[i].uniqueID == bookID) {
+      console.log(`myLibrary[i].uniqueID: ${myLibrary[i].uniqueID} & bookID: ${bookID}`);
+      // console.log(myLibrary[i].indexOf(bookID));
+      console.log(myLibrary.indexOf(myLibrary[i]));
+      myLibrary.splice(myLibrary.indexOf(myLibrary[i]),1);
+    }
+
+      // myLibrary.forEach((element) => {
+      //   console.log(element.uniqueID);
+      // });
+    }
+}

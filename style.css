@@ -14,3 +14,33 @@ body {
   width: 350px;
 }
 
+#book-shelf {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#book-shelf div {
+  border: 1px solid blueviolet;
+  width: 200px;
+  height: 300px;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 10px;
+}
+
+#book-shelf div p {
+  border-bottom: 1px solid green;
+  margin-bottom: 5px;
+}
+
+#book-shelf div button {
+  border: none;
+  background-color: blue;
+  color: white;
+  border-radius: 5px;
+  padding: 5px;
+  margin-bottom: 5px;
+  width: 100px;
+  height: 30px;
+  /* margin: auto; */
+}
